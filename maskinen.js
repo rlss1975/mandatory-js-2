@@ -13,6 +13,7 @@ let spelare1 = 1;
 let spelare2 = 0;
 let spelareIa = 0;
 let content;
+let b1,b2,b3,b4,b5,b6,b7,b8,b9;
 
 
 	// statement
@@ -88,7 +89,13 @@ function spelareKontroll(){
 };
 
 function vinnareKontroll(){
-	
+	//b1 = $(selector div /b1).text();
+	//b2 = $(selector div /b1).text();
+	//b3 = $(selector div /b1).text();
+	//b4 = $(selector div /b1).text();
+	//
+	//SWITCH
+	// if (B1='O'&& B2='O' && B3='O' && mode = 0){console.log("vinnare är spelare 2 eller IA "); }
 
 }
 
