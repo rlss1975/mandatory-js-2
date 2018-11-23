@@ -7,7 +7,8 @@ och har i sin callbaks functionen hella programet*/
 //
 
 // mode = 1 , betyder att man spela mot maskinen
-
+//aqui haremos un bucle que no saldra hasta que se seleccione 
+//el modo del juego y entonces pondra las senales segun prefeencias
 let mode = 0;
 let spelare1 = 1;
 let spelare2 = 0;
@@ -57,8 +58,13 @@ $('.rutor').on ('click', function(){
 		/* sker spelareKontroll(); att tvinga samma
 		spelare kunde clicka igen */
 		spelare = spelareKontroll();
-	}	
+	}
+	//aqui fuera haremos fuera de las condiciones un control de juego
+	//spelKontroll ()
+	vinnareKontroll()
+
 });
+
 
 
 
@@ -89,7 +95,49 @@ function spelareKontroll(){
 };
 
 function vinnareKontroll(){
-	//b1 = $(selector div /b1).text();
+	debugger;
+	b1 = $('#b1').text();
+	b2 = $('#b2').text();
+	b3 = $('#b3').text();
+	b4 = $('#b4').text();
+	b5 = $('#b5').text();
+	b6 = $('#b7').text();
+	b7 = $('#b7').text();
+	b8 = $('#b8').text();
+	b9 = $('#b9').text();
+	debugger;
+	console.log(b1);
+	console.log(b2);
+	//debugger;
+	// rader
+	// condition har en test av boolean för att undvika sker att gå
+	// i om dem 3 variabler har samma tumma värde.
+	if (b1===b2 && b1===b3 && b1 === true){
+		vinnareMedelande();
+	}else if (b4===b5 && b4===b6 && b4===true) {
+		vinnareMedelande();
+	}else if (b7===b8 && b7===b9 && b7===true) {
+		vinnareMedelande();
+	// columner
+	}else if (b1===b4 && b1===b7 && b1===true) {
+		vinnareMedelande();
+		
+	}else if (b2===b5 && b2===b8 && b2===true) {
+		vinnareMedelande();
+		
+	}else if (b3===b6 && b3===b9 && b3===true) {
+		vinnareMedelande();
+	// diagonaler	
+	}else if (b1===b5 && b1===b9 && b1===true) {
+		vinnareMedelande();
+		
+	}else if (b3===b5 && b3===b7 && b3===true) {
+		vinnareMedelande();
+	//	
+	}else{
+		console.log("aldrig borde programm skriv detta");
+		
+	}
 	//b2 = $(selector div /b1).text();
 	//b3 = $(selector div /b1).text();
 	//b4 = $(selector div /b1).text();
@@ -98,6 +146,19 @@ function vinnareKontroll(){
 	// if (B1='O'&& B2='O' && B3='O' && mode = 0){console.log("vinnare är spelare 2 eller IA "); }
 
 }
+
+function vinnareMedelande(){
+
+		if (b1=== 'X'){
+			alert('Spelare 1 vinns');
+		}else if(mode === 1){
+			alert('maskinen vinns')
+		}else{
+			alert('Spelare 2 vinns')
+		};
+
+
+};
 
 
 
