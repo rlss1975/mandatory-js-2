@@ -14,6 +14,7 @@ let spelare1 = 1;
 let spelare2 = 0;
 let spelareIa = 0;
 let content;
+let contKontroll;
 let b1,b2,b3,b4,b5,b6,b7,b8,b9;
 
 
@@ -31,7 +32,10 @@ $('.rutor').on ('click', function(){
 	//
 	let rutan = $(this);
 	//här vi kontrolerar om rutan är använd forut
-	let contKontroll = rutan.text(); 
+	
+	contKontroll = rutan.text(); 
+	//debugger;
+	console.log(contKontroll);
 	if (contKontroll !== '' || contKontroll !==''){
 		content = 1;
 	}else{
@@ -95,7 +99,7 @@ function spelareKontroll(){
 };
 
 function vinnareKontroll(){
-	debugger;
+	//debugger;
 	b1 = $('#b1').text();
 	b2 = $('#b2').text();
 	b3 = $('#b3').text();
@@ -105,58 +109,54 @@ function vinnareKontroll(){
 	b7 = $('#b7').text();
 	b8 = $('#b8').text();
 	b9 = $('#b9').text();
-	debugger;
+	//debugger;
 	console.log(b1);
 	console.log(b2);
+	console.log(typeof(b1));
 	//debugger;
 	// rader
 	// condition har en test av boolean för att undvika sker att gå
 	// i om dem 3 variabler har samma tumma värde.
-	if (b1===b2 && b1===b3 && b1 === true){
-		vinnareMedelande();
-	}else if (b4===b5 && b4===b6 && b4===true) {
-		vinnareMedelande();
-	}else if (b7===b8 && b7===b9 && b7===true) {
-		vinnareMedelande();
+	if (b1===b2 && b1===b3 && !!b1===true ){
+		vinnareMedelande(b1);
+	}else if (b4===b5 && b4===b6 && !!b4===true) {
+		vinnareMedelande(b4);
+	}else if (b7===b8 && b7===b9 && !!b7===true) {
+		vinnareMedelande(b7);
 	// columner
-	}else if (b1===b4 && b1===b7 && b1===true) {
-		vinnareMedelande();
+	}else if (b1===b4 && b1===b7 && !!b1===true) {
+		vinnareMedelande(b1);
 		
-	}else if (b2===b5 && b2===b8 && b2===true) {
-		vinnareMedelande();
+	}else if (b2===b5 && b2===b8 && !!b2===true) {
+		vinnareMedelande(b2);
 		
-	}else if (b3===b6 && b3===b9 && b3===true) {
-		vinnareMedelande();
+	}else if (b3===b6 && b3===b9 && !!b3===true) {
+		vinnareMedelande(b3);
 	// diagonaler	
-	}else if (b1===b5 && b1===b9 && b1===true) {
-		vinnareMedelande();
+	}else if (b1===b5 && b1===b9 && !!b1===true) {
+		vinnareMedelande(b1);
 		
-	}else if (b3===b5 && b3===b7 && b3===true) {
-		vinnareMedelande();
+	}else if (b3===b5 && b3===b7 && !!b3===true) {
+		vinnareMedelande(b3);
 	//	
 	}else{
-		console.log("aldrig borde programm skriv detta");
+		console.log("Spelet fortsätter");
 		
 	}
-	//b2 = $(selector div /b1).text();
-	//b3 = $(selector div /b1).text();
-	//b4 = $(selector div /b1).text();
-	//
-	//SWITCH
-	// if (B1='O'&& B2='O' && B3='O' && mode = 0){console.log("vinnare är spelare 2 eller IA "); }
+};
 
-}
-
-function vinnareMedelande(){
-
-		if (b1=== 'X'){
+function vinnareMedelande(vem){
+		
+		if ( vem === 'X'){
 			alert('Spelare 1 vinns');
-		}else if(mode === 1){
-			alert('maskinen vinns')
-		}else{
-			alert('Spelare 2 vinns')
+		}else if(vem === 'O' && mode === 0){
+			alert('Spelare 2 vinns');
+		}else if(vem === 'O' && mode === 1){
+			alert('Maskinen vinns');
 		};
-
+		//Vi stoppar att lyssnar rutan eftersom spel är slut.
+		// då tvingar vi att spelarerna inte kan fortsätta.
+		$('.rutor').off ('click');
 
 };
 
