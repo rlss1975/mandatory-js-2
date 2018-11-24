@@ -33,17 +33,17 @@ $(document).ready(function () {console.log("Jquery och Script går");
 	//
 	//
 	function main () {
-		debugger;
+		//debugger;
 		mode = $('input[name="spelMode"]:checked').val();
-		debugger;
+		//debugger;
 		//
 		if (mode === 'sp' || mode === 'ia') {
 			
 		
-			//hiddenOption();
-		
+			hiddenOption();
+		//debugger;
 			let rutan = $(this);
-			debugger;
+			
 			/* här kontrolerar man om rutan är använd forut */
 			contKontroll = rutan.text(); 
 			console.log(contKontroll);
@@ -52,77 +52,96 @@ $(document).ready(function () {console.log("Jquery och Script går");
 			}else{
 				content = 0;
 			}
-			debugger;
-			//
-			console.log(content);
-			let spelare = spelareKontroll();
-			console.log(spelare);
-
+			//debugger;
 			
-			if (spelare === 1 && content === 0) {
+			
+			//spelareKontroll();
+			
+			//debugger;
+			
+			if (spelare1 === 1 && content === 0) {
+				//debugger;
 				rutan.append('<p>X</p>');
 				rutan.css('background','#f894a5');
-				debugger;
+				//debugger;
 				//memorizaremos casilla usada para comparar en IA
 							
-			}else if (spelare === 2 && content === 0) {
-				
+			}else if (spelare2 === 1 && content === 0) {
+				//debugger;
 				rutan.append('<p>O</p>');
 				rutan.css('background','#f894a5');
-				debugger;
+				//debugger;
 				
-			}else if (spelare === 3 && content === 0) {
-					/* skriv rutan.append('<p>O</p>');
-						efter titta situationen på bordet
-						och ger bästa svaret*/
-				debugger;
 			}else{
-				debugger;
+				//debugger;
 				alert('rutan är fullt, välja annat')
+				//debugger;
 				/* sker spelareKontroll(); att tvinga samma
 				spelare kunde clicka igen */
 				
-				spelare = spelareKontroll();
+				spelareKontroll();
 			}
+			spelareKontroll();
 			//aqui fuera haremos fuera de las condiciones un control de juego
 			//spelKontroll ()
 			//setTimeout(()=>{vinnareKontroll()},1000); 
 			vinnareKontroll()
+			//debugger;
+			if (spelareIa === 1 && content === 0 && mode === 'ia') {
+				//mueve la maquina
+				///debugger;
+				//AQUI HACEMOS LECTURA TABLERO, Y BLOQUEAMOS O ATACAMOS
+				//MEMORIZAREMOS LAS POSICIONES X CADA VEZ QUE SE RELLENEN
+				console.log("mueve la maquina");
+				//debugger;
+				spelareKontroll();
+				vinnareKontroll();
+			}
+
+
 			// statement
 		}else{
+			//debugger;
 			alert('spel mode måste väljas')
+			//debugger;
 		}		// body... 
 	};
 	//
 	function spelareKontroll(){
-		debugger;
+		
 
-		if (spelare1 === 1 && spelare2 === 0 && mode === 'sp'){
+		if (spelare1 === 1 && spelare2 === 0){
+			//debugger;
 			console.log("spelare 1 har spelat");
 			/*med nedre 3 variabler controlerar man nästan tur*/
 			spelare1 = 0;
 			spelare2 = 1;
 			spelareIa = 1;
-			return 1;
+			//debugger;
+			
 		}else if (spelare1 === 0 && spelare2 === 1 && mode === 'sp') {
 			console.log("spelare 2 har spelat");
+			//debugger;
 			spelare1 = 1;
 			spelare2 = 0;
 			spelareIa = 0;
-			return 2;
-		}else if (spelare1 === 1 && spelareIa === 0 && mode === 'ia') {
+			
+		}else if (spelare1 === 0 && spelareIa === 1 && mode === 'ia') {
 			console.log("IA har spelat");
 			spelare1 = 1;
+			spelare2 = 0;
 			spelareIa = 0;
-			return 3;
+			
 		}else{
+			//debugger;
 			alert('ingen spelare valt')
-			return 0;
+			
 		}
 	};
 	//
 	function vinnareKontroll(){
 		//
+		//debugger;
 		b1 = $('#b1 p').text();
 		b2 = $('#b2 p').text();
 		b3 = $('#b3 p').text();
@@ -132,6 +151,7 @@ $(document).ready(function () {console.log("Jquery och Script går");
 		b7 = $('#b7 p').text();
 		b8 = $('#b8 p').text();
 		b9 = $('#b9 p').text();
+		//debugger;
 		console.log(b1+b2+b3+b5+b6+b7+b8+b9);
 		
 		//
@@ -205,6 +225,7 @@ $(document).ready(function () {console.log("Jquery och Script går");
 	function vinnareMedelande(vem){
 			//debugger;
 			console.log(vem);
+			//debugger;
 			if ( vem === 'X'){
 				alert('Spelare 1 vinns');
 			}else if(vem === 'O' && mode === 'sp'){
@@ -226,7 +247,7 @@ $(document).ready(function () {console.log("Jquery och Script går");
 		}
 	}
 	function init () {
-		
+		//debugger;
 		spelare1 = 1;
 		spelare2 = 0;
 		spelareIa = 0;
@@ -237,7 +258,7 @@ $(document).ready(function () {console.log("Jquery och Script går");
 		$("[for='sp']").css('visibility','visible');
 		$('div p').remove();
 		$('.rutor').css('background','pink');
-
+		//debugger;
 		//$('#sp').attr('checked','false');
 		//$('#ia').attr('checked','false');
 		//
