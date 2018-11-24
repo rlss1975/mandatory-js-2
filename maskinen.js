@@ -2,7 +2,7 @@
 //
 /*Instruction som kontrollera att Jquery funkar när man ladda sidan
 och har i sin callbaks functionen hella programet*/
-//$(document).ready(function () {console.log("Jquery och Script går");});
+$(document).ready(function () {console.log("Jquery och Script går");
 //
 //
 
@@ -16,6 +16,9 @@ let spelareIa = 0;
 let content;
 let contKontroll;
 let b1,b2,b3,b4,b5,b6,b7,b8,b9;
+// BUCLE CERRADO HASTA SALIR CON START. 
+
+// evento cancelar y restart siempre escucha
 
 
 	// statement
@@ -27,9 +30,12 @@ värde 3 betyder: tur till spelare IA
 */
 
 // jag behåller event i loopen medan ingen 3 i raden finns.
+
+/***********MAIN PROGRAM*******************/
 $('.rutor').on ('click', function(){
 	//
 	//
+
 	let rutan = $(this);
 	//här vi kontrolerar om rutan är använd forut
 	
@@ -69,10 +75,7 @@ $('.rutor').on ('click', function(){
 	vinnareKontroll()
 
 });
-
-
-
-
+//
 function spelareKontroll(){
 
 	if (spelare1 === 1 && spelare2 === 0 && spelareIa === 0){
@@ -98,8 +101,9 @@ function spelareKontroll(){
 		return 0;
 	}
 };
-
+//
 function vinnareKontroll(){
+	//
 	b1 = $('#b1 p').text();
 	b2 = $('#b2 p').text();
 	b3 = $('#b3 p').text();
@@ -112,16 +116,6 @@ function vinnareKontroll(){
 	//
 	/* (!!b$===true), Detta är använd för at undvika programmet 
 	går i 'vinn' optioner med tre lika tomma värde.*/
-	console.log(b1);
-	console.log(b2);
-	console.log(b3);
-	console.log(b4);
-	console.log(b5);
-	console.log(b6);
-	console.log(b7);
-	console.log(b8);
-	console.log(b9);
-	//debugger;
 	if (b1===b2 && b1===b3 && !!b1===true ){
 		vinnareMedelande(b1);
 		$('#b1 p').addClass('vinnRutor');
@@ -181,13 +175,11 @@ function vinnareKontroll(){
 		$('#b8 p').addClass('tabellerRutor');
 		$('#b9 p').addClass('tabellerRutor');
 		alert('TABELLER, INGEN VINNER')
-
 	}else{
 		console.log("Spelet fortsätter");
-		
 	}
 };
-
+//
 function vinnareMedelande(vem){
 		//debugger;
 		console.log(vem);
@@ -198,11 +190,10 @@ function vinnareMedelande(vem){
 		}else if(vem === 'O' && mode === 1){
 			alert('Maskinen vinns');
 		};
-		//Vi stoppar att lyssnar rutan eftersom spel är slut.
-		// då tvingar vi att spelarerna inte kan fortsätta.
+		/*Vi stoppar att lyssnar rutorna eftersom spel är slut,
+		 då, vi tvingar att spelarerna inte kan fortsätta.*/
 		$('.rutor').off ('click');
-
 };
-
+});
 
 
