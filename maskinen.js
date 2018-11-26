@@ -1,12 +1,11 @@
 'use strict';
-//
+/******************************************/
 /*Instruction som kontrollera att Jquery funkar när man ladda sidan
-och har i sin callbaks functionen hella programet*/
+och har i sin callbaksfunctionen hella programet*/
 $(document).ready(function () {console.log("Jquery och Script går");
-	//Vilkor i  början
-	
-
-
+	/******************************************/
+	/*****initial variable conditions**********/
+	/******************************************/
 	let spelare1 = 1;
 	let spelare2 = 0;
 	let spelareIa = 0;
@@ -14,36 +13,41 @@ $(document).ready(function () {console.log("Jquery och Script går");
 	let contKontroll;
 	let mode;
 	let b1,b2,b3,b4,b5,b6,b7,b8,b9;
+	let iaMinning = [];
+	let iaSortering = [];
+	let iaCodeInput = [];
+	let resultRandom;
+	let slutFlag = 0;
 	//
-	/* spelareKontroll() returneras koden för tur;
-	värde 1 betyder: tur till spelare 1
-	värde 2 betyder: tur till spelare 2
-	värde 3 betyder: tur till spelare IA 
-	*/
-
-	// jag behåller event i loopen medan ingen 3 i raden finns.
-
-	/***********MAIN PROGRAM*******************/
-
-
+	/******************************************/
+	/*******MAIN KONTROLL PROGRAM**************/
+	/******************************************/
 	$('.rutor').on ('click', main);
 	$('#reset').on ('click', init);
-
+	/******************************************/
+	/******************************************/
+	/******************************************/
 	//
 	//
+	//
+	/******************************************/
+	/*******PROGRAM FUNCTIONER*****************/
+	/******************************************/
+	//
+	//funktionen main() är programmets träd sker
 	//
 	function main () {
-		//debugger;
+		//
 		mode = $('input[name="spelMode"]:checked').val();
-		//debugger;
+		//
 		//
 		if (mode === 'sp' || mode === 'ia') {
-			
-		
+			//debugger;
 			hiddenOption();
-		//debugger;
+			//
 			let rutan = $(this);
-			
+			console.log(rutan);
+			//
 			/* här kontrolerar man om rutan är använd forut */
 			contKontroll = rutan.text(); 
 			console.log(contKontroll);
@@ -52,64 +56,50 @@ $(document).ready(function () {console.log("Jquery och Script går");
 			}else{
 				content = 0;
 			}
-			//debugger;
-			
-			
-			//spelareKontroll();
-			
-			//debugger;
-			
+			//debugger;			
 			if (spelare1 === 1 && content === 0) {
 				//debugger;
 				rutan.append('<p>X</p>');
 				rutan.css('background','#f894a5');
 				//debugger;
-				//memorizaremos casilla usada para comparar en IA
-							
 			}else if (spelare2 === 1 && content === 0) {
 				//debugger;
 				rutan.append('<p>O</p>');
 				rutan.css('background','#f894a5');
 				//debugger;
-				
 			}else{
 				//debugger;
 				alert('rutan är fullt, välja annat')
-				//debugger;
 				/* sker spelareKontroll(); att tvinga samma
-				spelare kunde clicka igen */
-				
+				spelare kunde clicka igen */				
 				spelareKontroll();
 			}
 			spelareKontroll();
-			//aqui fuera haremos fuera de las condiciones un control de juego
-			//spelKontroll ()
-			//setTimeout(()=>{vinnareKontroll()},1000); 
 			vinnareKontroll()
-			//debugger;
-			if (spelareIa === 1 && content === 0 && mode === 'ia') {
-				//mueve la maquina
-				///debugger;
-				//AQUI HACEMOS LECTURA TABLERO, Y BLOQUEAMOS O ATACAMOS
-				//MEMORIZAREMOS LAS POSICIONES X CADA VEZ QUE SE RELLENEN
-				console.log("mueve la maquina");
-				//debugger;
-				spelareKontroll();
-				vinnareKontroll();
+			if (slutFlag === 0) {
+				// statement
+				if (spelareIa === 1 && content === 0 && mode === 'ia') {
+					//
+					//Här IA analisera spel och använd sin turn
+					setTimeout(function(){iaCPU(iaCodeInput)},800,);
+					//
+					//debugger;
+					spelareKontroll();
+				}
+				slutFlag = 0;
 			}
-
-
 			// statement
 		}else{
 			//debugger;
 			alert('spel mode måste väljas')
-			//debugger;
-		}		// body... 
+			
+		}		 
 	};
 	//
+	//spelareKontroll() denna funktionen styr spelarens tur.
+	//
 	function spelareKontroll(){
-		
-
+		//debugger;
 		if (spelare1 === 1 && spelare2 === 0){
 			//debugger;
 			console.log("spelare 1 har spelat");
@@ -135,7 +125,6 @@ $(document).ready(function () {console.log("Jquery och Script går");
 		}else{
 			//debugger;
 			alert('ingen spelare valt')
-			
 		}
 	};
 	//
@@ -143,65 +132,100 @@ $(document).ready(function () {console.log("Jquery och Script går");
 		//
 		//debugger;
 		b1 = $('#b1 p').text();
+		iaMinning[0] = b1;
 		b2 = $('#b2 p').text();
+		iaMinning[1] = b2;
 		b3 = $('#b3 p').text();
+		iaMinning[2] = b3;
 		b4 = $('#b4 p').text();
+		iaMinning[3] = b4;
 		b5 = $('#b5 p').text();
+		iaMinning[4] = b5;
 		b6 = $('#b6 p').text();
+		iaMinning[5] = b6;
 		b7 = $('#b7 p').text();
+		iaMinning[6] = b7;
 		b8 = $('#b8 p').text();
+		iaMinning[7] = b8;
 		b9 = $('#b9 p').text();
-		//debugger;
-		console.log(b1+b2+b3+b5+b6+b7+b8+b9);
-		
+		iaMinning[8] = b9;
 		//
-		/* (!!b$===true), Detta är använd för at undvika programmet 
+		//debugger;
+		//		
+		/* den här delen är för att skapa situationen i array 
+		till använda sen i IA.*/		
+		iaSortering = iaMinning.map((element)=>{
+		if(element === 'X'){
+				return 'X';
+			}else if ( element ==='O'){
+				return 'O';
+			}else{
+				//E empty
+				return '#';
+			}
+		});
+		console.log(iaSortering);
+		iaCodeInput = iaSortering.join('');
+		console.log(iaCodeInput);
+		//debugger;
+		//
+		/* (!!b$===true), Detta variable är använd för at undvika programmet 
 		går i 'vinn' optioner med tre lika tomma värde.*/
+		//
+	//if (slutFlag === 0) {	
 		if (b1===b2 && b1===b3 && !!b1===true ){
-			vinnareMedelande(b1);
+			
 			$('#b1 p').addClass('vinnRutor');
 			$('#b2 p').addClass('vinnRutor');
 			$('#b3 p').addClass('vinnRutor');
+			vinnareMedelande(b1);
 		}else if (b4===b5 && b4===b6 && !!b4===true) {
-			vinnareMedelande(b4);
+			
 			$('#b4 p').addClass('vinnRutor');
 			$('#b5 p').addClass('vinnRutor');
 			$('#b6 p').addClass('vinnRutor');
+			vinnareMedelande(b4);
 		}else if (b7===b8 && b7===b9 && !!b7===true) {
-			vinnareMedelande(b7);
+			
 			$('#b7 p').addClass('vinnRutor');
 			$('#b8 p').addClass('vinnRutor');
 			$('#b9 p').addClass('vinnRutor');
+			vinnareMedelande(b7);
 		// columner
 		}else if (b1===b4 && b1===b7 && !!b1===true) {
-			vinnareMedelande(b1);
+			
 			$('#b1 p').addClass('vinnRutor');
 			$('#b4 p').addClass('vinnRutor');
 			$('#b7 p').addClass('vinnRutor');
+			vinnareMedelande(b1);
 			
 		}else if (b2===b5 && b2===b8 && !!b2===true) {
-			vinnareMedelande(b2);
+			
 			$('#b2 p').addClass('vinnRutor');
 			$('#b5 p').addClass('vinnRutor');
 			$('#b8 p').addClass('vinnRutor');
+			vinnareMedelande(b2);
 			
 		}else if (b3===b6 && b3===b9 && !!b3===true) {
-			vinnareMedelande(b3);
+			
 			$('#b3 p').addClass('vinnRutor');
 			$('#b6 p').addClass('vinnRutor');
 			$('#b9 p').addClass('vinnRutor');
+			vinnareMedelande(b3);
 		// diagonaler	
 		}else if (b1===b5 && b1===b9 && !!b1===true) {
-			vinnareMedelande(b1);
+			
 			$('#b1 p').addClass('vinnRutor');
 			$('#b5 p').addClass('vinnRutor');
 			$('#b9 p').addClass('vinnRutor');
+			vinnareMedelande(b1);
 			
 		}else if (b3===b5 && b3===b7 && !!b3===true) {
-			vinnareMedelande(b3);
+			
 			$('#b3 p').addClass('vinnRutor');
 			$('#b5 p').addClass('vinnRutor');
 			$('#b7 p').addClass('vinnRutor');
+			vinnareMedelande(b3);
 		//	
 		}else if (!!b1===true && !!b2===true && !!b3===true && !!b4===true && !!b5===true && !!b6===true && !!b7===true && !!b8===true && !!b9===true) {
 			console.log('TABELLER, INGEN VINNER');
@@ -216,27 +240,34 @@ $(document).ready(function () {console.log("Jquery och Script går");
 			$('#b8 p').addClass('tabellerRutor');
 			$('#b9 p').addClass('tabellerRutor');
 			alert('TABELLER, INGEN VINNER')
+			slutFlag = 1;
 			$('.rutor').off ('click');
 		}else{
 			console.log("Spelet fortsätter");
 		}
 	};
 	//
+	//
 	function vinnareMedelande(vem){
-			//debugger;
-			console.log(vem);
-			//debugger;
-			if ( vem === 'X'){
-				alert('Spelare 1 vinns');
-			}else if(vem === 'O' && mode === 'sp'){
-				alert('Spelare 2 vinns');
-			}else if(vem === 'O' && mode === 'ia'){
-				alert('Maskinen vinns');
-			};
-			/*Vi stoppar att lyssnar rutorna eftersom spel är slut,
-			 då, vi tvingar att spelarerna inte kan fortsätta.*/
-			$('.rutor').off ('click');
+		//debugger;
+		console.log(vem);
+		//debugger;
+		if ( vem === 'X'){
+			alert('Spelare 1 vinns');
+		}else if(vem === 'O' && mode === 'sp'){
+			alert('Spelare 2 vinns');
+		}else if(vem === 'O' && mode === 'ia'){
+			alert('Maskinen vinns');
+		};
+		
+		/*Vi stoppar att lyssnar rutorna eftersom spel är slut,
+		 då, vi tvingar att spelarerna inte kan fortsätta.*/
+		$('.rutor').off ('click');
+		slutFlag = 1 ;
 	};
+	//
+	/* function hiddenOption() tar bort mode som man inte 
+	använd under spel*/	
 	function hiddenOption (){
 		if (mode === 'sp') {
 			$('#ia').css('visibility','hidden');
@@ -245,9 +276,12 @@ $(document).ready(function () {console.log("Jquery och Script går");
 			$('#sp').css('visibility','hidden');
 			$("[for='sp']").css('visibility','hidden');
 		}
-	}
+	};
+	//
+	/*function init () gör en stor Reset för att spela från borjan*/	
 	function init () {
 		//debugger;
+		slutFlag = 0;
 		spelare1 = 1;
 		spelare2 = 0;
 		spelareIa = 0;
@@ -259,13 +293,209 @@ $(document).ready(function () {console.log("Jquery och Script går");
 		$('div p').remove();
 		$('.rutor').css('background','pink');
 		//debugger;
-		//$('#sp').attr('checked','false');
-		//$('#ia').attr('checked','false');
-		//
-		
 		//
 		$('.rutor').off ('click');
 		$('.rutor').on ('click', main);
+	};
+	//
+	//
+	function iaCPU(inputCode){
+		switch (inputCode) {
+			// spel 1
+			case 'X########':
+				$('#b5').append('<p>O</p>');
+				$('#b5').css('background','#f894a5');
+				break;
+			case '#X#######':
+				$('#b5').append('<p>O</p>');
+				$('#b5').css('background','#f894a5');
+				break;
+			case '##X######':
+				$('#b5').append('<p>O</p>');
+				$('#b5').css('background','#f894a5');
+				break;
+			case '###X#####':
+				$('#b5').append('<p>O</p>');
+				$('#b5').css('background','#f894a5');
+				break;
+			case '####X####':
+				/******************************************/
+				$('#b1').append('<p>O</p>');
+				$('#b1').css('background','#f894a5');
+				break;
+				/******************************************/
+			case '#####X###':
+				$('#b5').append('<p>O</p>');
+				$('#b5').css('background','#f894a5');
+				break;
+			case '######X##':
+				$('#b5').append('<p>O</p>');
+				$('#b5').css('background','#f894a5');
+				// statements_1
+				break;
+			case '#######X#':
+				$('#b5').append('<p>O</p>');
+				$('#b5').css('background','#f894a5');
+				break;
+			case '########X':
+				$('#b5').append('<p>O</p>');
+				$('#b5').css('background','#f894a5');
+				break;
+			/******************************************/
+			/******************************************/
+			// spel 2
+			case 'XX##O####':
+				$('#b3').append('<p>O</p>');
+				$('#b3').css('background','#f894a5');
+				break;
+			case 'X#X#O####':
+				$('#b2').append('<p>O</p>');
+				$('#b2').css('background','#f894a5');
+				break;
+			case '#XX#O#####':
+				$('#b1').append('<p>O</p>');
+				$('#b1').css('background','#f894a5');
+				break;
+			case '####O#XX#':
+				$('#b9').append('<p>O</p>');
+				$('#b9').css('background','#f894a5');
+				break;
+			case '####O#X#X':
+				$('#b8').append('<p>O</p>');
+				$('#b8').css('background','#f894a5');
+				break;
+			case '####O##XX':
+				$('#b7').append('<p>O</p>');
+				$('#b7').css('background','#f894a5');
+				break;
+			case 'X##XO####':
+				$('#b7').append('<p>O</p>');
+				$('#b7').css('background','#f894a5');
+				// statements_1
+				break;
+			case '##X#O#X##':
+				$('#b9').append('<p>O</p>');
+				$('#b9').css('background','#f894a5');
+				// statements_1
+				break;				
+			// spel 2.1
+			case '##X#O###X':
+				$('#b6').append('<p>O</p>');
+				$('#b6').css('background','#f894a5');
+				break;
+			case '####O##XX':
+				$('#b3').append('<p>O</p>');
+				$('#b3').css('background','#f894a5');
+				break;	
+			/******************************************/
+			/******************************************/
+			// spel 2.1
+			case 'OX##X####':
+				$('#b8').append('<p>O</p>');
+				$('#b8').css('background','#f894a5');
+				break;
+			case 'O#X##X###':
+				$('#b9').append('<p>O</p>');
+				$('#b9').css('background','#f894a5');
+				break;
+			case 'O#X#X#####':
+				$('#b7').append('<p>O</p>');
+				$('#b7').css('background','#f894a5');
+				break;
+			case 'O#X####X##':
+				$('#b5').append('<p>O</p>');
+				$('#b5').css('background','#f894a5');
+				break;
+			case '####O#X#X':
+				$('#b8').append('<p>O</p>');
+				$('#b8').css('background','#f894a5');
+				break;
+			case 'O#####XX#':
+				$('#b9').append('<p>O</p>');
+				$('#b9').css('background','#f894a5');
+				break;
+			case 'O######XX':
+				$('#b7').append('<p>O</p>');
+				$('#b7').css('background','#f894a5');
+				// statements_1
+				break;
+			case 'O#####X#X':
+				$('#b8').append('<p>O</p>');
+				$('#b8').css('background','#f894a5');
+				// statements_1
+				break;				
+			/******************************************/
+			/******************************************/
+			/***efter 3 spel, maskinen blir dum och spela random******/
+			default:
+				random();
+				renderRandom(resultRandom);
+				break;
+		}
+	};
+	//
+	//
+	function random (){
+		//debugger;
+		let ledigRutor=[];
+		//
+		for(let i = 0; i < iaSortering.length; i++){
+			if(iaSortering[i] === '#'){
+				ledigRutor.push(i+1);
+			}
+		}
+		let nummerRutor = ledigRutor.length;
+		let indexRandom =Math.floor(Math.random()*nummerRutor);
+		console.log(ledigRutor[indexRandom]);
+		resultRandom = ledigRutor[indexRandom];
+	}
+	//
+	//
+	function renderRandom (datain){
+		//debugger;
+		switch (datain) {
+			case 1:
+				$('#b1').append('<p>O</p>');
+				$('#b1').css('background','#f894a5');
+				break;
+			case 2:
+				$('#b2').append('<p>O</p>');
+				$('#b2').css('background','#f894a5');
+				break;
+			case 3:
+				$('#b3').append('<p>O</p>');
+				$('#b3').css('background','#f894a5');
+				break;
+			case 4:
+				$('#b4').append('<p>O</p>');
+				$('#b4').css('background','#f894a5');
+				break;
+			case 5:
+				$('#b5').append('<p>O</p>');
+				$('#b5').css('background','#f894a5');
+				break;																
+			case 6:
+				$('#b6').append('<p>O</p>');
+				$('#b6').css('background','#f894a5');
+				break;					
+			case 7:
+				$('#b7').append('<p>O</p>');
+				$('#b7').css('background','#f894a5');
+				break;									
+			case 8:
+				$('#b8').append('<p>O</p>');
+				$('#b8').css('background','#f894a5');
+				break;					
+			case 9:
+				$('#b9').append('<p>O</p>');
+				$('#b9').css('background','#f894a5');
+				break;					
+			default:
+				alert('något problem i spel cpu');
+				alert('gärna kontakta med utvecklare')
+				break;
+		}
+		vinnareKontroll();
 	}
 });
 
