@@ -259,7 +259,7 @@ $(document).ready(function () {console.log("Jquery och Script går");
 		}else if(vem === 'O' && mode === 'ia'){
 			alert('Maskinen vinns');
 		};
-		
+		//
 		/*Vi stoppar att lyssnar rutorna eftersom spel är slut,
 		 då, vi tvingar att spelarerna inte kan fortsätta.*/
 		$('.rutor').off ('click');
